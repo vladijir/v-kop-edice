@@ -1,5 +1,5 @@
 const config = {
-	size: 3,
+	size: 5,
 	dict: [
 		"\"egypťani\"",
 		"astrid nestíhá",
