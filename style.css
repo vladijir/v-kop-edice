@@ -1,13 +1,20 @@
+:root {
+	--color-text: white;
+	--color-background: white;
+	--color-primary: #e6060d;
+	font-family: "Inter", sans-serif;
+}
+
 body {
-	background-image: url("bg-nebe.jpg");
+	background-color: var(--color-background);
+	margin: 0;
 }
 
 header {
 	box-sizing: border-box;
 	text-align: center;
-	color: yellow;
-	background-image: url("bg-nedk.jpg");
-	border-radius: 1em;
+	color: var(--color-text);
+	background-color: var(--color-primary);
 	padding: 0.5em;
 	margin-bottom: 1em;
 	width: 100%;
@@ -15,7 +22,6 @@ header {
 
 header>*>* {
 	padding: 2px;
-	background-image: url("bg-nebe.jpg");
 }
 
 main {
@@ -31,14 +37,18 @@ main {
 }
 
 .square {
-	max-width: 6.5em;
-	width: calc(100% - 4px);
-	height: 0;
-	padding-bottom: 100%; /* square aspect ratio */
-	color: white;
-	background-image: url("bg-dark.jpg");
+	max-width: 8em;
+	aspect-ratio: 1/1;
+	color: var(--color-text);
+	background-color: var(--color-primary);
 	margin: 2px;
-	transition: opacity 0.2s;
+	transition: opacity 0.1s;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 }
 
 .square:hover {
@@ -46,10 +56,9 @@ main {
 }
 
 .square>div {
-	display: inline-block;
-	position: relative;
-	margin-top: 50%;
-	translate: 0 -50%;
+	margin: 5px;
+	padding: 5px;
+	font-weight: 600;
 }
 
 .square.checked {
