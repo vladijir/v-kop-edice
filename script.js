@@ -1,35 +1,3 @@
-let dict = [
-	"drevorubač",
-	"hnusné číslo",
-	"zneužít",
-	"Zuzka",
-	"kolieska",
-	"počuješ ma Tomáš?",
-	"Hliněný",
-	"čas na dôkaz",
-	"Tony",
-	"somarina",
-	"umelý krok",
-	"dcera",
-	"stránky hliněné",
-	"násilí",
-	"hovadina",
-	"přestávku?",
-	"vyrušující ať jdou ven",
-	"někdo spí",
-	"rozmazanej / přesvícenej visualizér",
-	"Veronika",
-	"scheatovat",
-	"nekonečná minuta",
-	"Chuck Norris",
-	"pozrem a vidim",
-	"nepriatel",
-	"vemte si ty papiery",
-	"Adriana",
-	"Lukáš",
-	"finta",
-];
-
 const setToday = (today) => {
 	let date_text =
 		String(today.getDate()) +
@@ -44,12 +12,10 @@ const setToday = (today) => {
 const setLocalStorage = () => {
 	const checked = Array(16).fill(false);
 	localStorage.removeItem("checked"); //removing old checked array
-	localStorage.removeItem("win"); //removing old win value
 	localStorage.setItem("checked", JSON.stringify(checked)); //adding new checked array
-	localStorage.setItem("win", JSON.stringify(false)); //adding new win value
 };
 
-const setCookies = (today) => {
+const getCookies = (today) => {
 	// random UUID seed stored in a cookie, that expires on midnight
 	let device_unique_seed = "";
 
@@ -58,7 +24,7 @@ const setCookies = (today) => {
 
 	//find unique seed in cookie
 	device_unique_seed = parts
-		.find((row) => row.startsWith("hlinena_bingo_device_unique_seed="))
+		.find((row) => row.startsWith("bingo_device_unique_seed="))
 		?.split("=")[1];
 
 	// if no cookie is found (none created / expired), create one
@@ -76,7 +42,7 @@ const setCookies = (today) => {
 		);
 		let expires = "; expires=" + midnight.toGMTString();
 		document.cookie =
-			"hlinena_bingo_device_unique_seed=" +
+			"bingo_device_unique_seed=" +
 			device_unique_seed +
 			expires +
 			"; path=/";
@@ -90,6 +56,7 @@ const setCookies = (today) => {
 const shuffleArray = (device_unique_seed) => {
 	//shuffle
 	let random_gen = new Math.seedrandom(device_unique_seed);
+	const dict = config.dict;
 
 	for (i = 0; i < dict.length; ++i) {
 		var swap_index = Math.floor(random_gen.quick() * dict.length);
@@ -97,39 +64,12 @@ const shuffleArray = (device_unique_seed) => {
 	}
 };
 
-const confetti = () => {
-	var confettiSettings = {
-		target: "my-canvas",
-		max: "200",
-		rotate: true,
-		respawn: true,
-	};
-	var confetti = new ConfettiGenerator(confettiSettings);
-	confetti.render();
-	
-	//stop after 10s
-	setTimeout(() => {
-		confetti.clear();
-	}, 10000);
-};
-
-const win = () => {
-	localStorage.setItem("win", JSON.stringify(true));
-	confetti();
-	alert("Bingo!");
-};
-
 const check_win = (checked) => {
-	let won = JSON.parse(localStorage.getItem("win"));
-	if (won) {
-		return;
-	}
-
 	//columns
-	for (x = 0; x < 4; ++x) {
-		column_full = true;
-		for (y = 0; y < 4; ++y) {
-			if (!checked[y * 4 + x]) {
+	for (let x = 0; x < config.size; x++) {
+		let column_full = true;
+		for (let y = 0; y < config.size; y++) {
+			if (!checked[y * config.size + x]) {
 				column_full = false;
 			}
 		}
@@ -139,10 +79,10 @@ const check_win = (checked) => {
 		}
 	}
 	//rows
-	for (y = 0; y < 4; ++y) {
+	for (let y = 0; y < config.size; y++) {
 		row_full = true;
-		for (x = 0; x < 4; ++x) {
-			if (!checked[y * 4 + x]) {
+		for (let x = 0; x < config.size; x++) {
+			if (!checked[y * config.size + x]) {
 				row_full = false;
 			}
 		}
@@ -153,47 +93,86 @@ const check_win = (checked) => {
 	}
 
 	//diagonal
-	if (checked[0] && checked[5] && checked[10] && checked[15]) {
+	let diagonal = true;
+	for (let i = 0; i < config.size; i++) {
+		let x = i; let y = i;
+		if(!checked[y * config.size + x]) diagonal = false;
+	}
+
+	if (diagonal) {
 		win();
 		return;
 	}
-	if (checked[3] && checked[6] && checked[9] && checked[12]) {
+
+	diagonal = true;
+	for (let i = 0; i < config.size; i++) {
+		let x = config.size-i; let y = i;
+		if(!checked[y * config.size + x]) diagonal = false;
+	}
+
+	if (diagonal) {
 		win();
 		return;
 	}
 };
+
+const applyCheckedStyle = (cell, check) => {
+	if (check && !cell.classList.contains("checked")) {
+		cell.classList.add("checked");
+	} else if (!check && cell.classList.contains("checked")) {
+		cell.classList.remove("checked");
+	}
+}
 
 const onClickCell = (cell, index, checked) => {
 	cell.onclick = function () {
 		checked[index] = !checked[index];
-		if (checked[index]) {
-			this.style.opacity = 0.4;
-		} else {
-			this.style.opacity = 1;
-		}
+		applyCheckedStyle(this, checked[index]);
 		localStorage.setItem("checked", JSON.stringify(checked)); //set new value for squares
-		check_win(checked);
+		checkWin(index, checked);
 	};
 };
 
 const mainLoop = () => {
+
+	// get board elemtn
+	let board = document.getElementById("board");
+
+	// set date
 	let today = new Date();
 	setToday(today);
 
-	let [device_unique_seed, checked] = setCookies(today);
+
+	// check valid size config
+	if (config.size**2 > config.dict.length) {
+		console.error("Grid size too large, not enought dictionary items.")
+		board.innerHTML = "<b>Developer of this app is stupid, check logs.</b>";
+		return;
+	}
+
+	// generate or get ID for device
+	let [device_unique_seed, checked] = getCookies(today);
+
+	// shuffle dict array for uniq bingo
 	shuffleArray(device_unique_seed);
 
+	// generate squares to be filled
+	for (let i = 0; i < config.size**2; i++)
+		board.insertAdjacentHTML("beforeend", '<div class="square"><div></div></div>');
+
+	// set board size
+	board.style.setProperty("grid-template-rows", "repeat("+config.size+", 1fr)");
+	board.style.setProperty("grid-template-columns", "repeat("+config.size+", 1fr)");
+
+	// get squares
 	let squares = document.getElementsByClassName("square");
 	squares = [...squares];
 
+	// fill text and attach onClick
 	squares.forEach((cell) => {
 		let index = squares.indexOf(cell);
-		cell.children[0].innerText = dict[index];
-		if (checked[index]) {
-			cell.style.opacity = 0.4;
-		} else {
-			cell.style.opacity = 1;
-		}
+		cell.children[0].innerText = config.dict[index];
+		applyCheckedStyle(cell, checked[index]);
 		onClickCell(cell, index, checked);
 	});
 };

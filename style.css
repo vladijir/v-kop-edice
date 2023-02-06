@@ -1,10 +1,8 @@
-body
-{
+body {
 	background-image: url("bg-nebe.jpg");
 }
 
-header
-{
+header {
 	box-sizing: border-box;
 	text-align: center;
 	color: yellow;
@@ -15,28 +13,24 @@ header
 	width: 100%;
 }
 
-header>*>*
-{
+header>*>* {
 	padding: 2px;
 	background-image: url("bg-nebe.jpg");
 }
 
-main
-{
+main {
 	text-align: center;
 	width: 100%;
 }
 
-.board
-{
+.board {
 	max-width: 100%;
 	display: inline-grid;
-	grid-template-columns: 25% 25% 25% 25%;
-	grid-template-rows: 25% 25% 25% 25%;
+	grid-template-columns: auto;
+	grid-template-rows: auto;
 }
 
-.square
-{
+.square {
 	max-width: 6.5em;
 	width: calc(100% - 4px);
 	height: 0;
@@ -47,20 +41,22 @@ main
 	transition: opacity 0.2s;
 }
 
-.square:hover
-{
+.square:hover {
 	cursor: pointer;
 }
 
-.square>*
-{
+.square>div {
 	display: inline-block;
 	position: relative;
 	margin-top: 50%;
 	translate: 0 -50%;
 }
 
-#my-canvas {
+.square.checked {
+	opacity: 0.4;
+}
+
+#confetti-canvas {
 	pointer-events: none;
 	position: absolute;
 	top: 0;
