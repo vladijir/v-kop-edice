@@ -24,10 +24,21 @@ const config = {
 		"organizátoři nevědí co mají dělat",
 		"libovolný člověk má FYKOS merch",
 		"libovolný člověk má výfuk merch",
-		"libovolný člověk má chemiklání merch",
+		"libovolný člověk má merch jiného semináře",
 		"libovolný tým má matching trika",
 		"týmy zdrhají ještě před vyhlášením",
 		"příšerná angličtina",
-		"organizátoři během opravování vytváří memes"
+		"organizátoři během opravování vytváří memes",
+		"někdo něco vykřikne při přečtení prvních úloh",
+		"stůl s bagetami bez lidí",
+		"barikády z učebnic na stole",
+		"dupkala říká vtipy a nikdo se nesměje",
+		"agresivní propagace merche",
+		"někdo běží k opravovatelům jak o život a pošlou ho zpátky",
+		"fronty lidí co náhodně tipují na konci soutěže",
+		"úloha o náhodném organizátorovi, co chápou jen organizátoři",
+		"\"někdo něco ukradl, prosíme o navrácení\"",
+		"tabulky z minulého století na stole",
+		"fronta na záchodech"
 	]
 }
