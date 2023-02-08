@@ -39,6 +39,7 @@ const config = {
 		"úloha o náhodném organizátorovi, co chápou jen organizátoři",
 		"\"někdo něco ukradl, prosíme o navrácení\"",
 		"tabulky z minulého století na stole",
-		"fronta na záchodech"
+		"fronta na záchodech",
+		"tým na vyhlašované pozici není přítomný"
 	]
 }
