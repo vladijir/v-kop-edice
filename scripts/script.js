@@ -1,4 +1,5 @@
-function setTextToday(today) {
+function setTextToday() {
+	let today = new Date();
 	let date_text =
 		String(today.getDate()) +
 		". " +
@@ -10,12 +11,14 @@ function setTextToday(today) {
 };
 
 function resetLocalStorage() {
-	const checked = Array(16).fill(false);
-	localStorage.removeItem("checked"); //removing old checked array
-	localStorage.setItem("checked", JSON.stringify(checked)); //adding new checked array
+	console.log("checked" + config.event);
+	const checked = Array(config.size ** 2).fill(false);
+	localStorage.removeItem("checked" + config.event); //removing old checked array
+	localStorage.setItem("checked" + config.event, JSON.stringify(checked)); //adding new checked array
 };
 
-function getCookies(today) {
+function getCookies() {
+	let today = new Date();
 	// random UUID seed stored in a cookie, that expires on midnight
 	let device_unique_seed = "";
 
@@ -26,6 +29,8 @@ function getCookies(today) {
 	device_unique_seed = parts
 		.find((row) => row.startsWith("bingo_device_unique_seed="))
 		?.split("=")[1];
+
+	if (localStorage.getItem("checked" + config.event) === null) resetLocalStorage();
 
 	// if no cookie is found (none created / expired), create one
 	if (!device_unique_seed) {
@@ -48,8 +53,8 @@ function getCookies(today) {
 			"; path=/";
 	}
 	//parse array from localStorage
-	const checked = JSON.parse(localStorage.getItem("checked"));
-	
+	const checked = JSON.parse(localStorage.getItem("checked" + config.event));
+
 	return [device_unique_seed, checked];
 };
 
@@ -76,41 +81,39 @@ function onClickCell(cell, index, checked) {
 	cell.onclick = function () {
 		checked[index] = !checked[index];
 		applyCheckedStyle(this, checked[index]);
-		localStorage.setItem("checked", JSON.stringify(checked)); //set new value for squares
+		localStorage.setItem("checked" + config.event, JSON.stringify(checked)); //set new value for squares
 		checkWin(index, checked);
 	};
 };
 
-function mainLoop() {
+function main() {
 
 	// get board elemtn
 	let board = document.getElementById("board");
 
 	// set date
-	let today = new Date();
-	setTextToday(today);
-
+	setTextToday();
 
 	// check valid size config
-	if (config.size**2 > config.dict.length) {
+	if (config.size ** 2 > config.dict.length) {
 		console.error("Grid size too large, not enought dictionary items.")
 		board.innerHTML = "<b>Developer of this app is stupid, check logs.</b>";
 		return;
 	}
 
 	// generate or get ID for device
-	let [device_unique_seed, checked] = getCookies(today);
+	let [device_unique_seed, checked] = getCookies();
 
 	// shuffle dict array for uniq bingo
 	shuffleArray(device_unique_seed);
 
 	// generate squares to be filled
-	for (let i = 0; i < config.size**2; i++)
+	for (let i = 0; i < config.size ** 2; i++)
 		board.insertAdjacentHTML("beforeend", '<div class="square"><div></div></div>');
 
 	// set board size
-	board.style.setProperty("grid-template-rows", "repeat("+config.size+", 1fr)");
-	board.style.setProperty("grid-template-columns", "repeat("+config.size+", 1fr)");
+	board.style.setProperty("grid-template-rows", "repeat(" + config.size + ", 1fr)");
+	board.style.setProperty("grid-template-columns", "repeat(" + config.size + ", 1fr)");
 
 	// get squares
 	let squares = document.getElementsByClassName("square");
@@ -125,4 +128,4 @@ function mainLoop() {
 	});
 };
 
-mainLoop();
+main();

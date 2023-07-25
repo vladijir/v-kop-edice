@@ -1,4 +1,5 @@
 const config = {
+	event: "fof",
 	size: 5,
 	dict: [
 		"\"egypťani\"",

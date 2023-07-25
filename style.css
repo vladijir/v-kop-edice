@@ -1,7 +1,7 @@
 :root {
 	--color-text: white;
 	--color-background: white;
-	--color-primary: #e6060d;
+	--color-primary: #444;
 	font-family: "Inter", sans-serif;
 }
 
@@ -52,6 +52,7 @@ main {
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
+	text-decoration: none;
 }
 
 .square:hover {
