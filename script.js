@@ -1,4 +1,4 @@
-const setToday = (today) => {
+function setTextToday(today) {
 	let date_text =
 		String(today.getDate()) +
 		". " +
@@ -9,13 +9,13 @@ const setToday = (today) => {
 	document.getElementById("date").innerText = date_text;
 };
 
-const setLocalStorage = () => {
+function resetLocalStorage() {
 	const checked = Array(16).fill(false);
 	localStorage.removeItem("checked"); //removing old checked array
 	localStorage.setItem("checked", JSON.stringify(checked)); //adding new checked array
 };
 
-const getCookies = (today) => {
+function getCookies(today) {
 	// random UUID seed stored in a cookie, that expires on midnight
 	let device_unique_seed = "";
 
@@ -29,7 +29,7 @@ const getCookies = (today) => {
 
 	// if no cookie is found (none created / expired), create one
 	if (!device_unique_seed) {
-		setLocalStorage();
+		resetLocalStorage();
 
 		device_unique_seed = crypto.randomUUID();
 		let midnight = new Date(
@@ -53,7 +53,7 @@ const getCookies = (today) => {
 	return [device_unique_seed, checked];
 };
 
-const shuffleArray = (device_unique_seed) => {
+function shuffleArray(device_unique_seed) {
 	//shuffle
 	let random_gen = new Math.seedrandom(device_unique_seed);
 	const dict = config.dict;
@@ -64,59 +64,7 @@ const shuffleArray = (device_unique_seed) => {
 	}
 };
 
-const check_win = (checked) => {
-	//columns
-	for (let x = 0; x < config.size; x++) {
-		let column_full = true;
-		for (let y = 0; y < config.size; y++) {
-			if (!checked[y * config.size + x]) {
-				column_full = false;
-			}
-		}
-		if (column_full) {
-			win();
-			return;
-		}
-	}
-	//rows
-	for (let y = 0; y < config.size; y++) {
-		row_full = true;
-		for (let x = 0; x < config.size; x++) {
-			if (!checked[y * config.size + x]) {
-				row_full = false;
-			}
-		}
-		if (row_full) {
-			win();
-			return;
-		}
-	}
-
-	//diagonal
-	let diagonal = true;
-	for (let i = 0; i < config.size; i++) {
-		let x = i; let y = i;
-		if(!checked[y * config.size + x]) diagonal = false;
-	}
-
-	if (diagonal) {
-		win();
-		return;
-	}
-
-	diagonal = true;
-	for (let i = 0; i < config.size; i++) {
-		let x = config.size-i; let y = i;
-		if(!checked[y * config.size + x]) diagonal = false;
-	}
-
-	if (diagonal) {
-		win();
-		return;
-	}
-};
-
-const applyCheckedStyle = (cell, check) => {
+function applyCheckedStyle(cell, check) {
 	if (check && !cell.classList.contains("checked")) {
 		cell.classList.add("checked");
 	} else if (!check && cell.classList.contains("checked")) {
@@ -124,7 +72,7 @@ const applyCheckedStyle = (cell, check) => {
 	}
 }
 
-const onClickCell = (cell, index, checked) => {
+function onClickCell(cell, index, checked) {
 	cell.onclick = function () {
 		checked[index] = !checked[index];
 		applyCheckedStyle(this, checked[index]);
@@ -133,14 +81,14 @@ const onClickCell = (cell, index, checked) => {
 	};
 };
 
-const mainLoop = () => {
+function mainLoop() {
 
 	// get board elemtn
 	let board = document.getElementById("board");
 
 	// set date
 	let today = new Date();
-	setToday(today);
+	setTextToday(today);
 
 
 	// check valid size config
