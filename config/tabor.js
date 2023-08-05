@@ -2,13 +2,12 @@ const config = {
 	event: "tabor",
 	size: 5,
 	dict: [
-		"eva: \"No do píči\"",
-		"Libovolný účastník běhá víc, neež by musel",
+		"Libovolný účastník běhá víc, než by musel",
 		"\"Snídaně bude\"",
 		"\"Svačina bude\"",
 		"\"Oběd bude\"",
 		"\"Večeře bude\"",
-		"\"jídlo bude\"",
+		"\"Jídlo bude\"",
 		"Kuchyně nestíhá",
 		"Je potřeba protáhnout hru",
 		"Je potřeba zkrátit hru",
@@ -16,7 +15,7 @@ const config = {
 		"Libovolnému účastníkovi se nelíbí jídlo",
 		"Jídlo je nezvykle tmavé",
 		"Jídlo je nedovařené",
-		"jídlo je v nesprávné konzistenci",
+		"Jídlo je v nesprávné konzistenci",
 		"Hra není připravená dvě hodiny před hrou",
 		"Adam se snaží cokoliv zautomatizovat",
 		"Nejede tiskárna",
@@ -40,7 +39,6 @@ const config = {
 		"kuchyně komukoliv vnucuje ovoce",
 		"libovolná postel se propadne",
 		"moment překvapení",
-		"moment překvapení",
 		"přehodilo se jídlo",
 		"robert si čistí zuby",
 		"\"to jsou lobotomové\"",
@@ -49,6 +47,10 @@ const config = {
 		"viktor něco vysvětluje se zdviženým ukazováčkem",
 		"v jídle se vyskytuje ingredience, která tam zjevně nepatří",
 		"v kuchyni je předmět, který tam očividně nepatří",
-		"v libovolnou ranní hodinu se začíná připravovat oběd"
+		"v libovolnou ranní hodinu se začíná připravovat oběd",
+		"Martin má otázku",
+		"kdokoli udělá meme na Egora",
+		"v účastnickém pokoji je více orgů jak dětí",
+		"jede 3D tiskárna"
 	]
 }
