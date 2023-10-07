@@ -1,0 +1,32 @@
+const config = {
+	event: "meeting",
+	size: 5,
+	dict: [
+		"Kde je eva?",
+		"Kde je Lubor?",
+		"Jídlo se peče na obou stranách plotny",
+		"Hustý tmavý dým z kuchyně",
+		"Jídlo bude",
+		"Program má 2 hodiny zpoždění",
+		"Někdo nadává na práci Savuly",
+		"Někdo nadává na práci Evy Š.",
+		"Eva F. se znovu přihlásila k orgování",
+		"Nejdou světla",
+		"Zapomenutá světla přes noc",
+		"Nejde se připojit k projektoru",
+		"V učebně není projektor",
+		"Mastná pizza",
+		"Ztracený nový org",
+		"Zjištění, že někdo z orgů rok nepoužívá nextcloud",
+		"Přesunutí programu až po jídle, protože se stejně nestihne",
+		"Rituální facepalm",
+		"Předávkování krejzáčem",
+		"Někdo vytváří memes během programu",
+		"Studená sprcha",
+		"Nápoje vypité během prvního večera",
+		"Srovnávání s FYKOSem",
+		"Recyklovaný jídelníček",
+		"Viktor chce nakoupit jenom maso",
+		"Hedvika dává telefon na focení random lidem v parku"
+	]
+}
