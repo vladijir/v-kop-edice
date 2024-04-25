@@ -19,6 +19,12 @@ function resetLocalStorage() {
 
 function getCookies() {
 	let today = new Date();
+
+	// if after deadline, set today to next day
+	if (today.getHours() >= 22) {
+		today.setDate(today.getDate() + 1);
+	}
+
 	// random UUID seed stored in a cookie, that expires on midnight
 	let device_unique_seed = "";
 
@@ -41,9 +47,9 @@ function getCookies() {
 			today.getFullYear(),
 			today.getMonth(),
 			today.getDate(),
-			23,
-			59,
-			59
+			22,
+			0,
+			0
 		);
 		let expires = "; expires=" + midnight.toGMTString();
 		document.cookie =
